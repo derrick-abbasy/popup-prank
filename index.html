@@ -24,24 +24,24 @@
 </body>
 </html> -->
 
-<script>
-  let stopPopups = false;
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>You Asked For It 😈</title>
+    <script>
+      let unleashed = false;
 
-  function showMultiplePopups(count) {
-    if (count > 0 && !stopPopups) {
-      alert(`😈 Popup #${26 - count} — You can't escape now.`);
-      showMultiplePopups(count - 1);
-    }
-  }
-
-  function startPopupLoop() {
-    if (!stopPopups) {
-      showMultiplePopups(25); // shows 25 popups in a row
-      setTimeout(startPopupLoop, 4000); // wait 4s and repeat
-    }
-  }
-
-  window.onload = function () {
-    startPopupLoop();
-  };
-</script>
+      function unleashMadness() {
+        if (unleashed) return;
+        unleashed = true;
+        for (let i = 0; i < 20; i++) {
+          window.open("https://derrick-abbasy.github.io/popup-prank/?popup=" + i, "_blank", "width=300,height=200");
+        }
+      }
+    </script>
+  </head>
+  <body style="background:black; color:white; text-align:center; margin-top:100px;">
+    <h1>🔥 Do NOT click this button 🔥</h1>
+    <button style="padding:20px; font-size:18px;" onclick="unleashMadness()">Unleash Chaos</button>
+  </body>
+</html>
