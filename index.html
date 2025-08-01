@@ -27,7 +27,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>😈 Virus Detected</title>
+  <title>😈 Virus Detected Bij</title>
   <style>
     body {
       background: black;
@@ -61,12 +61,18 @@
       for (let i = 0; i < count; i++) {
         const box = document.createElement('div');
         box.className = 'fake-alert';
-        box.innerHTML = `<strong>⚠️ ALERT ${alertCounter++}</strong><br><br>System breach detected!<br><button onclick="spawnFakeAlerts(3); this.parentElement.remove()">OK</button>`;
+        box.innerHTML = `<strong>⚠️ ALERT ${alertCounter++}</strong><br><br>System breach detected!<br><button>OK</button>`;
 
         const x = Math.random() * (window.innerWidth - 250);
         const y = Math.random() * (window.innerHeight - 150);
         box.style.left = `${x}px`;
         box.style.top = `${y}px`;
+
+        const button = box.querySelector('button');
+        button.onclick = function () {
+          document.body.removeChild(box);
+          spawnFakeAlerts(4); // spawn 4 new ones when OK is clicked
+        };
 
         document.body.appendChild(box);
       }
