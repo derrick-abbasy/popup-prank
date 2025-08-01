@@ -24,7 +24,7 @@
 </body>
 </html> -->
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
   <title>😈 Virus Detected</title>
@@ -83,6 +83,107 @@
 
   window.onload = () => {
     spawnFakeAlerts(20); // Initial popups
+  };
+</script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>😈 Virus Detected Bij</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: monospace;
+      animation: blinkBackground 0.5s infinite alternate;
+    }
+
+    @keyframes blinkBackground {
+      0% { background-color: #000000; }
+      100% { background-color: #4d0000; }
+    }
+
+    .fake-alert {
+      position: absolute;
+      width: 220px;
+      height: 150px;
+      background: white;
+      color: black;
+      border: 2px solid red;
+      padding: 10px;
+      box-shadow: 0 0 20px red;
+      z-index: 9999;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 4px 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .countdown {
+      font-weight: bold;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sound file -->
+<audio id="siren" loop autoplay>
+  <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  let alertCounter = 1;
+
+  function spawnFakeAlerts(count) {
+    for (let i = 0; i < count; i++) {
+      const box = document.createElement('div');
+      box.className = 'fake-alert';
+      box.innerHTML = `
+        <strong>⚠️ ALERT ${alertCounter++}</strong><br><br>
+        System breach detected!<br>
+        <span class="countdown">5</span> sec left<br>
+        <button>OK</button>`;
+
+      const x = Math.random() * (window.innerWidth - 250);
+      const y = Math.random() * (window.innerHeight - 150);
+      box.style.left = `${x}px`;
+      box.style.top = `${y}px`;
+
+      const countdownEl = box.querySelector('.countdown');
+      let countdown = 5;
+
+      const timer = setInterval(() => {
+        countdown--;
+        countdownEl.textContent = countdown;
+        if (countdown <= 0) {
+          clearInterval(timer);
+          document.body.removeChild(box);
+        }
+      }, 1000);
+
+      const button = box.querySelector('button');
+      button.onclick = function () {
+        // Don’t remove — spawn more!
+        spawnFakeAlerts(3);
+      };
+
+      document.body.appendChild(box);
+    }
+  }
+
+  window.onload = () => {
+    // Start the siren
+    document.getElementById('siren').play().catch(() => {});
+    // Spawn the first 20 popups
+    spawnFakeAlerts(20);
   };
 </script>
 
