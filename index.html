@@ -92,24 +92,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>😈 Virus Detected Bij</title>
+  <title>🚨 Warning!</title>
   <style>
     body {
       margin: 0;
       overflow: hidden;
       font-family: monospace;
-      animation: blinkBackground 0.5s infinite alternate;
+      animation: blinkBg 0.5s infinite alternate;
     }
 
-    @keyframes blinkBackground {
-      0% { background-color: #000000; }
-      100% { background-color: #4d0000; }
+    @keyframes blinkBg {
+      0% { background-color: #000; }
+      100% { background-color: #330000; }
     }
 
     .fake-alert {
       position: absolute;
       width: 220px;
-      height: 160px;
+      height: 150px;
       background: white;
       color: black;
       border: 2px solid red;
@@ -120,10 +120,9 @@
     }
 
     button {
-      margin-top: 10px;
-      padding: 4px 12px;
+      margin-top: 8px;
+      padding: 5px 15px;
       font-weight: bold;
-      cursor: pointer;
     }
 
     .countdown {
@@ -134,67 +133,67 @@
 </head>
 <body>
 
-<!-- Siren sound (autoplays) -->
 <audio id="siren" autoplay loop>
   <source src="https://www.soundjay.com/button/beep-07.wav" type="audio/wav">
-  Your browser does not support the audio element.
+  Your browser does not support audio.
 </audio>
 
 <script>
-  let alertCounter = 1;
+  let counter = 1;
 
-  function spawnFakeAlerts(count) {
-    for (let i = 0; i < count; i++) {
+  function playSound() {
+    const audio = document.getElementById('siren');
+    if (audio) {
+      audio.play().catch(() => {
+        document.body.addEventListener('click', () => audio.play(), { once: true });
+      });
+    }
+  }
+
+  function spawnPopup(amount) {
+    for (let i = 0; i < amount; i++) {
       const box = document.createElement('div');
       box.className = 'fake-alert';
 
-      const currentId = alertCounter++;
-      const id = `alert-${currentId}`;
-      const countdownId = `countdown-${currentId}`;
+      const popupId = `popup-${counter}`;
+      const countdownId = `countdown-${counter}`;
+      const number = counter++;
 
+      box.id = popupId;
       box.innerHTML = `
-        <strong>⚠️ ALERT ${currentId}</strong><br><br>
+        <strong>⚠️ ALERT ${number}</strong><br><br>
         System breach detected!<br>
-        <span class="countdown" id="${countdownId}">5</span> sec left<br>
-        <button onclick="onClickOk('${id}')">OK</button>
+        <span id="${countdownId}" class="countdown">5</span>s left<br>
+        <button onclick="onOkClick()">OK</button>
       `;
-      box.id = id;
 
-      const x = Math.random() * (window.innerWidth - 240);
-      const y = Math.random() * (window.innerHeight - 160);
-      box.style.left = `${x}px`;
-      box.style.top = `${y}px`;
+      box.style.left = `${Math.random() * (window.innerWidth - 240)}px`;
+      box.style.top = `${Math.random() * (window.innerHeight - 160)}px`;
 
       document.body.appendChild(box);
 
-      // countdown logic
-      let countdown = 5;
-      const timer = setInterval(() => {
-        countdown--;
-        const counterEl = document.getElementById(countdownId);
-        if (counterEl) counterEl.textContent = countdown;
-        if (countdown <= 0) {
-          clearInterval(timer);
-          const boxToRemove = document.getElementById(id);
-          if (boxToRemove) boxToRemove.remove();
+      // countdown
+      let seconds = 5;
+      const interval = setInterval(() => {
+        seconds--;
+        const el = document.getElementById(countdownId);
+        if (el) el.innerText = seconds;
+        if (seconds <= 0) {
+          clearInterval(interval);
+          box.remove();
         }
       }, 1000);
     }
   }
 
-  function onClickOk(id) {
-    // don’t remove the box, just spawn 3 more
-    spawnFakeAlerts(3);
+  function onOkClick() {
+    spawnPopup(3);
+    playSound();
   }
 
   window.onload = () => {
-    const siren = document.getElementById('siren');
-    siren.play().catch(() => {
-      // force play after user gesture if blocked
-      document.body.addEventListener('click', () => siren.play(), { once: true });
-    });
-
-    spawnFakeAlerts(20);
+    playSound();
+    spawnPopup(20);
   };
 </script>
 
