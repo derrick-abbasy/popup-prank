@@ -26,22 +26,28 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>You Asked For It 😈</title>
-    <script>
-      let unleashed = false;
-
-      function unleashMadness() {
-        if (unleashed) return;
-        unleashed = true;
-        for (let i = 0; i < 20; i++) {
-          window.open("https://derrick-abbasy.github.io/popup-prank/?popup=" + i, "_blank", "width=300,height=200");
-        }
+<head>
+  <title>System Warning</title>
+  <script>
+    function floodPopups() {
+      for (let i = 1; i <= 30; i++) {
+        window.open('', '', 'width=300,height=150,left=' + (i * 10) + ',top=' + (i * 10)).document.write(`
+          <html>
+            <head><title>Warning ${i}</title></head>
+            <body style="background:black; color:lime; font-family:monospace; text-align:center; margin-top:40px;">
+              <h3>⚠️ ALERT ${i}</h3>
+              <p>This is not a drill.</p>
+              <p>System breach detected.</p>
+            </body>
+          </html>
+        `);
       }
-    </script>
-  </head>
-  <body style="background:black; color:white; text-align:center; margin-top:100px;">
-    <h1>🔥 Do NOT click this button 🔥</h1>
-    <button style="padding:20px; font-size:18px;" onclick="unleashMadness()">Unleash Chaos</button>
-  </body>
+    }
+  </script>
+</head>
+<body style="background-color:#111; color:white; text-align:center; margin-top:100px;">
+  <h1>🧠 Security Layer Active</h1>
+  <p>Do not click the button below unless you're authorized.</p>
+  <button style="padding:20px; font-size:20px; background:red; color:white;" onclick="floodPopups()">Trigger System Check</button>
+</body>
 </html>
