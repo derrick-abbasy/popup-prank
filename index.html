@@ -27,27 +27,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>System Warning</title>
+  <title>😈 Virus Detected</title>
+  <style>
+    body {
+      background: black;
+      overflow: hidden;
+      margin: 0;
+    }
+    .fake-alert {
+      position: absolute;
+      width: 220px;
+      height: 120px;
+      background: white;
+      color: black;
+      font-family: monospace;
+      border: 2px solid red;
+      padding: 10px;
+      box-shadow: 0 0 20px red;
+      z-index: 9999;
+      text-align: center;
+    }
+    button {
+      margin-top: 10px;
+      padding: 4px 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
   <script>
-    function floodPopups() {
-      for (let i = 1; i <= 30; i++) {
-        window.open('', '', 'width=300,height=150,left=' + (i * 10) + ',top=' + (i * 10)).document.write(`
-          <html>
-            <head><title>Warning ${i}</title></head>
-            <body style="background:black; color:lime; font-family:monospace; text-align:center; margin-top:40px;">
-              <h3>⚠️ ALERT ${i}</h3>
-              <p>This is not a drill.</p>
-              <p>System breach detected.</p>
-            </body>
-          </html>
-        `);
+    function spawnFakeAlerts(count) {
+      for (let i = 1; i <= count; i++) {
+        const box = document.createElement('div');
+        box.className = 'fake-alert';
+        box.innerHTML = `<strong>⚠️ ALERT ${i}</strong><br><br>System breach detected!<br><button onclick="this.parentElement.remove()">OK</button>`;
+
+        // random position across the screen
+        const x = Math.random() * (window.innerWidth - 250);
+        const y = Math.random() * (window.innerHeight - 150);
+        box.style.left = `${x}px`;
+        box.style.top = `${y}px`;
+
+        document.body.appendChild(box);
       }
     }
+
+    window.onload = () => {
+      spawnFakeAlerts(40); // adjust number here (20, 30, 50...)
+    };
   </script>
 </head>
-<body style="background-color:#111; color:white; text-align:center; margin-top:100px;">
-  <h1>🧠 Security Layer Active</h1>
-  <p>Do not click the button below unless you're authorized.</p>
-  <button style="padding:20px; font-size:20px; background:red; color:white;" onclick="floodPopups()">Trigger System Check</button>
+<body>
 </body>
 </html>
