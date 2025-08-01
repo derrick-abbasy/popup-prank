@@ -24,50 +24,24 @@
 </body>
 </html> -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Important Alert</title>
-  <style>
-    body {
-      background-color: #444;
-      color: white;
-      font-family: sans-serif;
-      text-align: center;
-      margin-top: 100px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
-  <script>
-    let stopPopups = false;
+<script>
+  let stopPopups = false;
 
-    function showMultiplePopups(count) {
-      if (count > 0 && !stopPopups) {
-        alert(`😈 Popup #${26 - count} — You can't escape now.`);
-        showMultiplePopups(count - 1);
-      }
+  function showMultiplePopups(count) {
+    if (count > 0 && !stopPopups) {
+      alert(`😈 Popup #${26 - count} — You can't escape now.`);
+      showMultiplePopups(count - 1);
     }
+  }
 
-    function startPopupLoop() {
-      if (!stopPopups) {
-        showMultiplePopups(25); // Adjust this to increase/decrease popups
-        setTimeout(startPopupLoop, 4000); // 4 seconds between loops
-      }
+  function startPopupLoop() {
+    if (!stopPopups) {
+      showMultiplePopups(25); // shows 25 popups in a row
+      setTimeout(startPopupLoop, 4000); // wait 4s and repeat
     }
+  }
 
-    window.onload = function () {
-      startPopupLoop();
-    };
-  </script>
-</head>
-<body>
-  <h1>⚠️ Gotcha!</h1>
-  <p>Click the button below to stop the madness (if you're fast enough!)</p>
-  <button onclick="stopPopups = true;">I Surrender — Stop Pop-ups</button>
-</body>
-</html>
+  window.onload = function () {
+    startPopupLoop();
+  };
+</script>
