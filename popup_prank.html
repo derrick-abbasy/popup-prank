@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Important Alert</title>
+  <script>
+    let stopPopups = false;
+
+    function startPopupLoop() {
+      if (!stopPopups) {
+        alert("Why did you click the link?");
+        setTimeout(startPopupLoop, 500);
+      }
+    }
+
+    window.onload = function () {
+      startPopupLoop();
+    };
+  </script>
+</head>
+<body style="text-align:center; margin-top:50px;">
+  <h1>😂 Gotcha!</h1>
+  <p>Click the button below to stop the madness!</p>
+  <button onclick="stopPopups = true;">Stop Pop-ups</button>
+</body>
+</html>
