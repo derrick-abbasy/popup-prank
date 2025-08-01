@@ -27,7 +27,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>😈 Virus Detected Bij</title>
+  <title>😈 Virus Detected</title>
   <style>
     body {
       background: black;
@@ -54,35 +54,37 @@
       cursor: pointer;
     }
   </style>
-  <script>
-    let alertCounter = 1;
-
-    function spawnFakeAlerts(count) {
-      for (let i = 0; i < count; i++) {
-        const box = document.createElement('div');
-        box.className = 'fake-alert';
-        box.innerHTML = `<strong>⚠️ ALERT ${alertCounter++}</strong><br><br>System breach detected!<br><button>OK</button>`;
-
-        const x = Math.random() * (window.innerWidth - 250);
-        const y = Math.random() * (window.innerHeight - 150);
-        box.style.left = `${x}px`;
-        box.style.top = `${y}px`;
-
-        const button = box.querySelector('button');
-        button.onclick = function () {
-          document.body.removeChild(box);
-          spawnFakeAlerts(4); // spawn 4 new ones when OK is clicked
-        };
-
-        document.body.appendChild(box);
-      }
-    }
-
-    window.onload = () => {
-      spawnFakeAlerts(30); // Initial batch
-    };
-  </script>
 </head>
 <body>
+
+<script>
+  let alertCounter = 1;
+
+  function spawnFakeAlerts(count) {
+    for (let i = 0; i < count; i++) {
+      const box = document.createElement('div');
+      box.className = 'fake-alert';
+      box.innerHTML = `<strong>⚠️ ALERT ${alertCounter++}</strong><br><br>System breach detected!<br><button>OK</button>`;
+
+      const x = Math.random() * (window.innerWidth - 250);
+      const y = Math.random() * (window.innerHeight - 150);
+      box.style.left = `${x}px`;
+      box.style.top = `${y}px`;
+
+      const button = box.querySelector('button');
+      button.onclick = function () {
+        // Instead of removing, leave the old one and spawn 3 more
+        spawnFakeAlerts(3);
+      };
+
+      document.body.appendChild(box);
+    }
+  }
+
+  window.onload = () => {
+    spawnFakeAlerts(20); // Initial popups
+  };
+</script>
+
 </body>
 </html>
