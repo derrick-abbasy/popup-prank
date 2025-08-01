@@ -109,7 +109,7 @@
     .fake-alert {
       position: absolute;
       width: 220px;
-      height: 150px;
+      height: 160px;
       background: white;
       color: black;
       border: 2px solid red;
@@ -134,9 +134,10 @@
 </head>
 <body>
 
-<!-- Sound file -->
-<audio id="siren" loop autoplay>
-  <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
+<!-- Siren sound (autoplays) -->
+<audio id="siren" autoplay loop>
+  <source src="https://www.soundjay.com/button/beep-07.wav" type="audio/wav">
+  Your browser does not support the audio element.
 </audio>
 
 <script>
@@ -146,43 +147,53 @@
     for (let i = 0; i < count; i++) {
       const box = document.createElement('div');
       box.className = 'fake-alert';
-      box.innerHTML = `
-        <strong>⚠️ ALERT ${alertCounter++}</strong><br><br>
-        System breach detected!<br>
-        <span class="countdown">5</span> sec left<br>
-        <button>OK</button>`;
 
-      const x = Math.random() * (window.innerWidth - 250);
-      const y = Math.random() * (window.innerHeight - 150);
+      const currentId = alertCounter++;
+      const id = `alert-${currentId}`;
+      const countdownId = `countdown-${currentId}`;
+
+      box.innerHTML = `
+        <strong>⚠️ ALERT ${currentId}</strong><br><br>
+        System breach detected!<br>
+        <span class="countdown" id="${countdownId}">5</span> sec left<br>
+        <button onclick="onClickOk('${id}')">OK</button>
+      `;
+      box.id = id;
+
+      const x = Math.random() * (window.innerWidth - 240);
+      const y = Math.random() * (window.innerHeight - 160);
       box.style.left = `${x}px`;
       box.style.top = `${y}px`;
 
-      const countdownEl = box.querySelector('.countdown');
-      let countdown = 5;
+      document.body.appendChild(box);
 
+      // countdown logic
+      let countdown = 5;
       const timer = setInterval(() => {
         countdown--;
-        countdownEl.textContent = countdown;
+        const counterEl = document.getElementById(countdownId);
+        if (counterEl) counterEl.textContent = countdown;
         if (countdown <= 0) {
           clearInterval(timer);
-          document.body.removeChild(box);
+          const boxToRemove = document.getElementById(id);
+          if (boxToRemove) boxToRemove.remove();
         }
       }, 1000);
-
-      const button = box.querySelector('button');
-      button.onclick = function () {
-        // Don’t remove — spawn more!
-        spawnFakeAlerts(3);
-      };
-
-      document.body.appendChild(box);
     }
   }
 
+  function onClickOk(id) {
+    // don’t remove the box, just spawn 3 more
+    spawnFakeAlerts(3);
+  }
+
   window.onload = () => {
-    // Start the siren
-    document.getElementById('siren').play().catch(() => {});
-    // Spawn the first 20 popups
+    const siren = document.getElementById('siren');
+    siren.play().catch(() => {
+      // force play after user gesture if blocked
+      document.body.addEventListener('click', () => siren.play(), { once: true });
+    });
+
     spawnFakeAlerts(20);
   };
 </script>
